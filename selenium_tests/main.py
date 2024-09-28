@@ -6,13 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-# "gerarslides@outlook.pt"
-# "gerarslides2@outlook.pt   ---  só mês q vem"
-# "gerarslides3@outlook.pt   ---  só mês q vem"
-# "gerarslides4@outlook.pt   ---  só mês q vem"
-# "gerarslides5@outlook.pt   --
-usuario = "gerarslides@outlook.pt"
-senha = "Gera@slides1"
+usuario = ""
+senha = ""
 slideDescription = input("Digite o tema do slide: ")
 
 # Configurar o Chrome para rodar em segundo plano (headless mode)
