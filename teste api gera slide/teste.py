@@ -15,8 +15,8 @@ from spyder.plugins.help.utils.sphinxify import CSS_PATH
 from webdriver_manager.drivers.edge import EdgeChromiumDriver
 #gerarslides@outlook.pt#
 #Gera@slides1#
-usuario = "victorbenassi0@gmail.com"
-senha = "Raissalinda123@"
+usuario = ""
+senha = ""
 slideDescription = input("Digite o tema do slide: ")
 
 # Configurar o Chrome para rodar em segundo plano (headless mode)
