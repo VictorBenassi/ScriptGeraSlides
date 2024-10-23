@@ -12,7 +12,11 @@ import time
 
 # Função principal para o processo de login e geração de slides
 def gerar_slides():
-    #gerarslides2@gmail.com#
+    
+    #gerarslides@gmail.com   --  profile 3
+    #gerarslides2@gmail.com  --  profile 2
+    #gerarslides4@gmail.com  --  profile 4 -- senha Ger4@rslides12#
+    #gerarslides5@gmail.com  --  profile 5
     usuario = "gerarslides@gmail.com"
     senha = "Ger4@slides12"
     slideDescription = tema_var.get()
@@ -24,7 +28,7 @@ def gerar_slides():
     # Configurar o Chrome para rodar em segundo plano (headless mode)
     chrome_options = Options()
     chrome_options.add_argument("--window-size=1920x1080")
-    profile_path = r'C:\Users\Victor\AppData\Local\Google\Chrome\User Data\Profile 1'
+    profile_path = r'C:\Users\Victor\AppData\Local\Google\Chrome\User Data\Profile 3'
     chrome_options.add_argument(f"user-data-dir={profile_path}")
 
     driver_path = "./chromedriver.exe"
