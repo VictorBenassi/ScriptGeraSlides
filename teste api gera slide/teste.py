@@ -1,80 +1,53 @@
-from cffi.cffi_opcode import CLASS_NAME
+import customtkinter as ctk
+from tkinter import messagebox
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from PIL import Image, ImageTk
+from selenium.webdriver.common.keys import Keys
 import time
 
-from selenium.webdriver.support.expected_conditions import element_to_be_clickable
-from selenium.webdriver.support.wait import WebDriverWait
-from spyder.plugins.help.utils.sphinxify import CSS_PATH
-from webdriver_manager.drivers.edge import EdgeChromiumDriver
 
-# "gerarslides@gmail.com"  - senha: Ger4@slides12
-#gerarslides@outlook.pt#
-#Gera@slides1#
-usuario = "gerarslides@gmail.com"
-senha = "Ger4@slides12"
-slideDescription = input("Digite o tema do slide: ")
+# Função principal para o processo de login e geração de slides
+def gerar_slides():
+    # gerarslides@gmail.com   --  profile 3
+    #gerarslides2@gmail.com  --  profile 2
+    #gerarslides4@gmail.com  --  profile 4 -- senha Ger4@rslides12#
+    #gerarslides5@gmail.com  --  profile 5
+    #gerarslides6@gmail.com  --  profile 6
+    #
+    usuario = "gerarslides@gmail.com"
+    senha = "Ger4@slides12"
+    slideDescription = tema_var.get()
 
-# Configurar o Chrome para rodar em segundo plano (headless mode)
-chrome_options = Options()
-#chrome_options.add_argument("--headless")  # Modo headless
-#chrome_options.add_argument("--disable-gpu")  # Acelera o headless em alguns casos
-#chrome_options.add_argument("--no-sandbox")  # Necessário para Linux em algumas situações
-chrome_options.add_argument("--window-size=1920x1080")  # Define o tamanho da janela no modo headless
-#./chromedriver.exe#
-#./msedgedriver.exe#
-profile_path = r'C:\Users\Victor\AppData\Local\Google\Chrome\User Data\Profile 1'
-chrome_options.add_argument(f"user-data-dir={profile_path}")
+    if not slideDescription:
+        messagebox.showerror("Erro", "Por favor, insira um tema para os slides.")
+        return
 
-driver_path = "./chromedriver.exe"
-service = Service(driver_path)
-driver = webdriver.Chrome(service=service, options=chrome_options)
+    # Configurar o Chrome para rodar em segundo plano (headless mode)
+    chrome_options = Options()
+    chrome_options.add_argument("--window-size=1920x1080")
+    chrome_options.add_argument("--window-position=1921,0")
+    profile_path = r'C:\Users\Victor\AppData\Local\Google\Chrome\User Data\Profile 4'
+    chrome_options.add_argument(f"user-data-dir={profile_path}")
 
-driver.get('https://gamma.app/create/generate')
+    driver_path = "./chromedriver.exe"
+    service = Service(driver_path)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
-def login(driver, usuario, senha):
+    driver.get('https://gamma.app/create/generate')
+
     try:
         wait = WebDriverWait(driver, 20)
-        # Esperar a página carregar antes de interagir (ajustar conforme necessário)
 
-        # Encontrar o campo de email e preencher
-       # email_field = wait.until(EC.presence_of_element_located((By.ID, 'email')))
-       # email_field.send_keys(usuario)
-
-        # Encontrar o campo de senha e preencher
-        #password_field = wait.until(EC.presence_of_element_located((By.ID, 'password')))
-        #password_field.send_keys(senha + Keys.ENTER)
-        # Clicar no botão de login
-        #login_button = wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(), 'Entrar')]")))
-        #login_button.click()
-        # Esperar até a página carregar após o login
-
-
-        #password_field.send_keys(Keys.TAB)  # Primeiro TAB
-        #time.sleep(1)
-        #password_field.send_keys(Keys.TAB)  # Segundo TAB
-        #time.sleep(1)
-        #password_field.send_keys(Keys.ENTER)  # ENTER
-
-        #apresentacao = driver.find_element(By.CLASS_NAME, "chakra-button chakra-stack css-1iu9wmc")
-        #apresentacao.click()
-        #driver.send_keys(Keys.TAB *5)
+        # Interação com os campos do site
         time.sleep(5)
-        #texto = driver.find_element(By.XPATH, "//textarea[@placeholder='Descreva o que gostaria de fazer']")
-        #texto.click()
-        #driver.send_keys(slideDescription)
-
-        wait = WebDriverWait(driver, 20)
         textarea = wait.until(EC.element_to_be_clickable((By.XPATH, "//textarea[contains(@class, 'chakra-textarea')]")))
         textarea.send_keys(slideDescription)
 
-        wait = WebDriverWait(driver, 20)
         button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.chakra-button.css-y0msvc")))
         button.click()
 
@@ -85,44 +58,77 @@ def login(driver, usuario, senha):
         gerar_final.click()
         time.sleep(40)
 
-        wait = WebDriverWait(driver, 20)
         button_menu = wait.until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "button[data-testid='doc-toolbar-menu-button']")))
         button_menu.click()
 
-
-
-        wait = WebDriverWait(driver, 20)
-        botao_export =wait.until(EC.element_to_be_clickable((By.XPATH, "//button[span[contains(text(), 'Exportar...')]]")))
+        botao_export = wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[span[contains(text(), 'Exportar...')]]")))
         botao_export.click()
 
 
 
-        #wait = WebDriverWait(driver, 20)
-        #div_formato = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".css-1qrkfiv")))
-        #div_formato.click()
+        wait = WebDriverWait(driver, 40)
 
-        wait = WebDriverWait(driver, 15)
-        div_exportar = wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(@class, 'css-1qrkfiv')]//p[text()='Exportar para PowerPoint']")))
+        div_exportar = wait.until(EC.visibility_of_element_located(
+            (By.XPATH, "//button[contains(@class, 'css-1qrkfiv')]//p[text()='Exportar para PowerPoint']")))
         div_exportar.click()
 
+        time.sleep(40)
+        messagebox.showinfo("Sucesso", "Slides gerados com sucesso!")
+
     except Exception as e:
-        print(f"Ocorreu um erro: {e}")
+        messagebox.showerror("Erro", f"Ocorreu um erro: {e}")
+    finally:
+        driver.quit()
 
 
+# Função para sair do aplicativo
+def sair():
+    root.quit()
 
+# Definir o modo de aparência e o tema padrão
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
 
+root = ctk.CTk()
+root.title("Gerador de Slides Automático")
 
+# Definir o tamanho da janela
+root.geometry("960x1080")
 
+# Carregar a imagem de fundo
+background_image = Image.open("background.png")  # Coloque o caminho correto da sua imagem aqui
+background_image = background_image.resize((960, 1080))  # Redimensionar a imagem para caber na janela
+bg_image_tk = ImageTk.PhotoImage(background_image)
 
+# Criar um label para colocar a imagem de fundo
+background_label = ctk.CTkLabel(root, image=bg_image_tk)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)  # Preencher o fundo da janela com a imagem
 
-# Chamar a função de login
-login(driver, usuario, senha)
+# Título da interface (colocar sobre a imagem)
+titulo_label = ctk.CTkLabel(root, text="Gerador de Slides Hudson - Sanofi", font=("Arial", 20), text_color="white", fg_color="#9358e6")
+titulo_label.pack(pady=10)
 
-time.sleep(240)
+# Campo para input do tema com fundo transparente
+tema_label = ctk.CTkLabel(root, text="Digite o tema do slide:", text_color="white", fg_color="#9358e6")
+tema_label.pack(pady=5)
 
+# Caixa de entrada com interior branco, sem contorno e sem cantos arredondados
+tema_var = ctk.StringVar()
+tema_entry = ctk.CTkEntry(root, textvariable=tema_var, width=300, height=40, corner_radius=0,  # Cantos sem arredondamento
+                          fg_color="white", border_width=0, text_color="#0C0C0C")  # Branco por dentro, sem contorno
+tema_entry.pack(pady=5)
 
+# Botão para gerar slides sem contorno e sem cantos arredondados
+gerar_button = ctk.CTkButton(root, text="Gerar Slides", command=gerar_slides, width=150, height=40, corner_radius=0,  # Sem cantos arredondados
+                             fg_color="#320475", border_width=0)  # Sem contorno
+gerar_button.pack(pady=10)
 
+# Botão para sair sem contorno e sem cantos arredondados
+sair_button = ctk.CTkButton(root, text="Sair", command=sair, width=150, height=40, corner_radius=0,  # Sem cantos arredondados
+                            fg_color="#570707", border_width=0)  # Sem contorno
+sair_button.pack(pady=10)
 
-# Fechar o navegador
-#driver.quit()
+# Iniciar o loop da interface gráfica
+root.mainloop()
