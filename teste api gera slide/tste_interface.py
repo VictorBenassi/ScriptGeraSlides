@@ -12,6 +12,7 @@ import time
 
 # Função principal para o processo de login e geração de slides
 def gerar_slides():
+    #gerarslides2@gmail.com#
     usuario = "gerarslides@gmail.com"
     senha = "Ger4@slides12"
     slideDescription = tema_var.get()
